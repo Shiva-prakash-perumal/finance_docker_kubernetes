@@ -1,21 +1,21 @@
-# 📈 Yahoo Finance Data Pipeline with Docker + Kubernetes
+# Yahoo Finance Data Pipeline with Docker + Kubernetes + Podman
 
 This project is a containerized and Kubernetes-ready pipeline that fetches stock data from the Yahoo Finance API, stores the raw data in AWS S3, transforms it, and re-uploads the cleaned output—all using scheduled jobs on Kubernetes.
 
 ---
 
-## 🚀 Features
+## Features
 
-- ✅ Fetches real-time stock data using the Yahoo Finance API
-- ✅ Stores raw and transformed datasets in separate S3 prefixes
-- ✅ Containerized with Docker
-- ✅ Kubernetes-compatible with a CronJob for automated scheduling
-- ✅ Environment-configurable via ConfigMaps and Secrets
-- ✅ Designed for Minikube, Podman, or full production clusters
+- Fetches real-time stock data using the Yahoo Finance API
+- Stores raw and transformed datasets in separate S3 prefixes
+- Containerized with Docker
+- Kubernetes-compatible with a CronJob for automated scheduling
+- Environment-configurable via ConfigMaps and Secrets
+- Designed for Minikube, Podman, or full production clusters
 
 ---
 
-## 🧱 Folder Structure
+## Folder Structure
 
 ```
 finance_docker_kubernetes/
@@ -28,13 +28,13 @@ finance_docker_kubernetes/
 │   ├── deployment.yaml
 │   ├── cronjob.yaml
 │   ├── configmap.yaml
-│   └── secret.yaml.template
+│   └── secret.yaml
 └── README.md
 ```
 
 ---
 
-## 🐳 Docker Setup
+## Docker Setup
 
 ### 1. Build the Docker image:
 
@@ -44,21 +44,16 @@ docker build -t yahoo-finance-pipeline .
 
 ---
 
-## ☸️ Kubernetes Setup
+## Kubernetes Setup
 
 > Works on Minikube, Docker Desktop (K8s enabled), or remote clusters.
 
 ### 1. Configure AWS Credentials Securely
 
-Copy and fill in `secret.yaml.template`:
-
-```bash
-cp k8s/secret.yaml.template k8s/secret.yaml
-# edit with your credentials
-```
-
 > ❗️**Never commit actual credentials to GitHub.**
-
+```bash
+aws configure
+```
 ---
 
 ### 2. Apply Kubernetes Resources
@@ -79,21 +74,21 @@ kubectl logs <pod-name>
 
 ---
 
-## 🗂 Environment Variables
+## Environment Variables
 
 These are injected via Kubernetes `ConfigMap` and `Secret`:
 
 ```yaml
 S3_BUCKET_NAME: your-bucket-name
-RAW_PREFIX: raw/
-TRANSFORMED_PREFIX: transformed/
+RAW_PREFIX: raw_data/
+TRANSFORMED_PREFIX: transformed_data/
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 ```
 
 ---
 
-## 🧪 Podman Support
+## To run via Podman 
 
 To use this with Podman:
 
@@ -105,23 +100,7 @@ This spins up the pipeline pod and runs your scripts using local container runti
 
 ---
 
-## ✅ Roadmap & Improvements
-
-- [ ] Add schema validation
-- [ ] Schedule via EventBridge (AWS-native)
-- [ ] Add test cases and GitHub Actions CI
-- [ ] Push results to a database or data warehouse
-- [ ] Visualize with Streamlit or Dash
-
----
-
-## 👨‍💻 Author
+## Author
 
 **Shiva Prakash Perumal**  
 [GitHub](https://github.com/Shiva-prakash-perumal) | [LinkedIn](https://linkedin.com/in/shiva-prakash-perumal)
-
----
-
-## 🪪 License
-
-This project is licensed under the [MIT License](LICENSE).
