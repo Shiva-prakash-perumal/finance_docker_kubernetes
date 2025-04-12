@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yahoo-finance
+spec:
+  containers:
+    - name: fetch-transform
+      image: yahoo-finance-pipeline
+      env:
+        - name: AWS_ACCESS_KEY_ID
+          value: YOUR_ACCESS_KEY
+        - name: AWS_SECRET_ACCESS_KEY
+          value: YOUR_SECRET_KEY
+        - name: AWS_DEFAULT_REGION
+          value: us-east-1
+        - name: S3_BUCKET_NAME
+          value: your-bucket-name
+        - name: RAW_PREFIX
+          value: raw_data/
+        - name: TRANSFORMED_PREFIX
+          value: transformed_data/
